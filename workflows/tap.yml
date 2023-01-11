@@ -18,7 +18,7 @@ jobs:
         run: |
           input_version="${{ github.event.inputs.tap_version }}"
           if [ "${#input_version}" -eq "0" ]; then
-            echo "tap_version=v0.2.2" >> $GITHUB_ENV
+            echo "tap_version=v0" >> $GITHUB_ENV
           else
             echo "tap_version=$input_version" >> $GITHUB_ENV
           fi
@@ -28,7 +28,7 @@ jobs:
       - name: "Create Checksum"
         run: |
           tap_sha256=""
-          wget https://github.com/a1ecbr0wn/bcd/archive/refs/tags/${{ env.tap_version }}.tar.gz
+          wget https://github.com/a1ecbr0wn/r53-ddns/archive/refs/tags/${{ env.tap_version }}.tar.gz
           if [ -f ${{ env.tap_version }}.tar.gz ]; then
             tap_sha256="$(shasum -a 256 ${{ env.tap_version }}.tar.gz | sed 's/ .*//')"
             echo "tap_sha256=$tap_sha256" >> $GITHUB_ENV
@@ -44,25 +44,25 @@ jobs:
 
       - name: "Create the formula from the template"
         run: |
-          cp template/bcd.rb Formula/bcd.rb
-          cat Formula/bcd.rb
-          sed -i 's/:tap_version/${{ env.tap_version }}/' Formula/bcd.rb
-          sed -i 's/:tap_sha256/${{ env.tap_sha256 }}/' Formula/bcd.rb
+          cp template/r53-ddns.rb Formula/r53-ddns.rb
+          cat Formula/r53-ddns.rb
+          sed -i 's/:tap_version/${{ env.tap_version }}/' Formula/r53-ddns.rb
+          sed -i 's/:tap_sha256/${{ env.tap_sha256 }}/' Formula/r53-ddns.rb
           echo " --- "
-          cat Formula/bcd.rb
+          cat Formula/r53-ddns.rb
 
       - name: "Create Pull Request"
         id: cpr
         uses: peter-evans/create-pull-request@v4
         with:
           token: ${{ secrets.PAT }}
-          commit-message: Update formula to bcd ${{ env.tap_version }}
+          commit-message: Update formula to r53-ddns ${{ env.tap_version }}
           committer: GitHub <noreply@github.com>
           author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
           signoff: false
-          branch: bcd-${{ env.tap_version }}
+          branch: r53-ddns-${{ env.tap_version }}
           delete-branch: true
-          title: 'Update of formula for bcd tag ${{ env.tap_version }}'
+          title: 'Update of formula for r53-ddns tag ${{ env.tap_version }}'
           body: |
             Update formula for ${{ env.tap_version }}
             - Change to version number
