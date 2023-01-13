@@ -1,6 +1,6 @@
 # Documentation: https://docs.brew.sh/Formula-Cookbook
 #                https://rubydoc.brew.sh/Formula
-class R53ddns < Formula
+class R53Ddns < Formula
   url "https://github.com/a1ecbr0wn/r53-ddns/archive/refs/tags/:tap_version.tar.gz"
   version ":tap_version"
   sha256 ":tap_sha256"
