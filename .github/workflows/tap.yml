@@ -71,5 +71,6 @@ jobs:
           labels: |
             homebrew
             formula
+          sign-commits: true
           assignees: a1ecbr0wn
           draft: false
