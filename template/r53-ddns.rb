@@ -14,4 +14,3 @@ class R53Ddns < Formula
     system "cargo", "install", *std_cargo_args
   end
 end
-  
